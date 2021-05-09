@@ -2,6 +2,7 @@ import {combineReducers, createStore} from "redux";
 import {addPostActionCreator, profileReducer, updateNewTextActionCreator} from "./profile-reduser";
 import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reduser";
 import usersReducer, {follow, setCurrentPage, setUsers, unfollow} from "./users-reduser";
+import authReducer from "./auth-reduser";
 
 export type ActionsType =
     addPostType
@@ -25,7 +26,8 @@ export type setCurrentPageType = ReturnType<typeof setCurrentPage>
 let rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
-    usersPage: usersReducer
+    usersPage: usersReducer,
+    auth:authReducer
 });
 export type AppStateType = ReturnType<typeof rootReducer>
 let store = createStore(rootReducer);
