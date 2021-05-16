@@ -2,31 +2,35 @@ import React from "react";
 import Profile from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
-import {setUsersProfile} from "../../redux/profile-reduser";
+import {getUserProfile} from "../../redux/profile-reduser";
 import { RouteComponentProps,withRouter} from "react-router";
+import {userAPI} from "../../api/api";
 
 type ParamsType ={
-    userId: string
+    userId: number
 }
 type MapStatePropsType = {
     profile: any
 }
 type MapDispatchPropsType = {
-    setUsersProfile: (profile: any) => void
+    getUserProfile: (profile: any) => void
 }
 type OwnPropsType = MapStatePropsType & MapDispatchPropsType
+// @ts-ignore
 type PropsType = RouteComponentProps<ParamsType>& OwnPropsType
 
 class ProfileContainer extends React.Component <PropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId;
         if (!userId) {
-            userId = "2";
+            userId = 2;
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-            .then(response => {
-                this.props.setUsersProfile(response.data);
-            });
+        this.props.getUserProfile(userId)
+        // userAPI.getProfile(userId)
+        //  axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
+        //     .then(response => {
+        //         this.props.setUsersProfile(response.data);
+        //     });
     }
 
     render() {
@@ -41,7 +45,7 @@ let mapStateToProps = (state: any): MapStatePropsType => ({
 
 
 let WithUrlDataContainerComponent = withRouter(ProfileContainer);
-export default connect(mapStateToProps, {setUsersProfile})(WithUrlDataContainerComponent);
+export default connect(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent);
 //   типизация
 // posts: PostType[]
 // likesCount: PostType[]

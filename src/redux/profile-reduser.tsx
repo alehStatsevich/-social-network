@@ -1,4 +1,6 @@
 import {PostType} from "./state";
+import {Dispatch} from "redux";
+import {userAPI} from "../api/api";
 
 export const ADD_POST = "ADD-POST";
 export const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
@@ -55,6 +57,15 @@ export const updateNewTextActionCreator = (newPostText: string) => {
 export const setUsersProfile = (profile: null) => {
     return {type: 'SET_USER_PROFILE', profile} as const
 }
+//санкрейтор это функция которая возращает функцию санку ,Санка это функция которая принимает диспатчь и делает внутри
+//асинхронные операции и различные мелкие диспатчи
+export const getUserProfile = (userId: number) => (dispatch:Dispatch)=>{
+    userAPI.getProfile(userId)
+        .then(response => {
+            dispatch(setUsersProfile(response.data));
+        });
+}
+
 // 41 урок схема
 //    if (action.type === 'ADD-POST') {
 //       let newPost: PostType = {
