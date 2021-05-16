@@ -1,4 +1,5 @@
-
+import {Dispatch} from "redux";
+import {userAPI} from "../api/api";
 
 
 export const FOLLOW = 'FOLLOW';
@@ -22,7 +23,7 @@ export const TOGGLE_IS_FETCHING_PROGRESS ='TOGGLE_IS_FETCHING_PROGRESS';
 
 export type initialStateType = {
     users: UserType[]
-    pageSize: any
+    pageSize: number
     totalUsersCount:number
     currentPage: number
     isFetching:boolean
@@ -94,10 +95,10 @@ let initialState: initialStateType  = {
           return state;
     }
  }
-export const follow = (userId: number) => {
+export const followSuccess = (userId: number) => {
    return{type: 'FOLLOW',userId} as const
 }
-export const unfollow = (userId: number) => {
+export const unfollowSuccess = (userId: number) => {
    return {type: 'UNFOLLOW',userId} as const
 }
 export const setUsers = (users: UserType[]) => {
@@ -115,6 +116,44 @@ export const toggleIsFetching = (isFetching: boolean) =>{
 export const toggleFollowingInProgress = (isFetching: boolean, userId:number) =>{
     return {type: TOGGLE_IS_FETCHING_PROGRESS, isFetching,userId} as const
 }
+
+export const getUsersThunkCreator = (currentPage: number,pageSize:number) => {
+     return(dispatch: Dispatch)=>{
+    dispatch (toggleIsFetching(true));
+    userAPI.getUsers(currentPage,pageSize).then(data => {
+        dispatch(toggleIsFetching(false));
+        dispatch(setUsers(data.items));
+        dispatch(setTotalUsersCount(data.totalCount));
+    });
+     }
+}
+//thunk
+export const follow = (userId: number) => {
+    return(dispatch: Dispatch)=>{
+        dispatch(toggleFollowingInProgress(true, userId))
+        userAPI.follow(userId)
+            .then(response => {
+                if (response.data.resultCode == 0) {
+                    dispatch(followSuccess(userId))
+                }
+                dispatch(toggleFollowingInProgress(false, userId))
+            });
+    }
+}
+//thunk
+export const unfollow = (userId: number) => {
+    return(dispatch: Dispatch)=>{
+        dispatch(toggleFollowingInProgress(true, userId))
+        userAPI.unfollow(userId)
+            .then(response => {
+                if (response.data.resultCode == 0) {
+                    dispatch(unfollowSuccess(userId))
+                }
+                dispatch(toggleFollowingInProgress(false, userId))
+            });
+    }
+}
+
  export default usersReducer;
 // {id: 1,photoUrl:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSujODEKwrdvmj6jufsQRsId0hv3Wr6vfppsA&usqp=CAU',
 //     followed:false, fullName: "Dima", status: "Hello",location:{city:"Minsk", country: "Belarus"}},

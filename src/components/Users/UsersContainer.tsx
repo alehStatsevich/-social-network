@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect, ConnectedProps} from "react-redux";
 import {
-    follow,
+    follow, getUsersThunkCreator,
     initialStateType,
     setCurrentPage,
     setTotalUsersCount,
@@ -36,22 +36,24 @@ type UsersPropsType = any
 
 class UsersContainer extends React.Component <PropsT> {
     componentDidMount() {
-        this.props.toggleIsFetching(true);
-        userAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-            this.props.toggleIsFetching(false);
-            this.props.setUsers(data.items);
-            this.props.setTotalUsersCount(data.totalCount);
-        });
+        this.props.getUsers(this.props.currentPage,this.props.pageSize);
+        // this.props.toggleIsFetching(true);
+        // userAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
+        //     this.props.toggleIsFetching(false);
+        //     this.props.setUsers(data.items);
+        //     this.props.setTotalUsersCount(data.totalCount);
+        // });
     }
 
-    onPageChanged = (pageNumber: any) => {
-        this.props.setCurrentPage(pageNumber);
-        this.props.toggleIsFetching(true);
-        userAPI.getUsers(pageNumber, this.props.pageSize)
-            .then(data => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items)
-            });
+    onPageChanged = (pageNumber: number) => {
+        this.props.getUsers(pageNumber, this.props.pageSize)
+        // this.props.setCurrentPage(pageNumber);
+        // this.props.toggleIsFetching(true);
+        // userAPI.getUsers(pageNumber, this.props.pageSize)
+        //     .then(data => {
+        //         this.props.toggleIsFetching(false)
+        //         this.props.setUsers(data.items)
+        //     });
     }
 
     render() {
@@ -118,11 +120,12 @@ let mapStateToProps = (state: AppStateType) => {
 const connector = connect(mapStateToProps, {
     follow,
     unfollow,
-    setUsers,
+    // setUsers,
     setCurrentPage,
-    setTotalUsersCount,
-    toggleIsFetching,
-    toggleFollowingInProgress
+    // setTotalUsersCount,
+    // toggleIsFetching,
+    toggleFollowingInProgress,
+    getUsers:getUsersThunkCreator
 })
 export type PropsT = ConnectedProps<typeof connector>
 export default connector(UsersContainer);
