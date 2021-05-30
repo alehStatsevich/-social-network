@@ -12,6 +12,7 @@ import {AppStateType} from "../../redux/redux-store";
 import Users from "./Users";
 import Preloader from "../Preloader";
 import {userAPI} from "../../api/api";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 type MapStatePropsType = {
@@ -117,6 +118,7 @@ let mapStateToProps = (state: AppStateType) => {
 //     toggleFollowingInProgress
 // })(UsersContainer);
 
+let withRedirect = WithAuthRedirect(UsersContainer)
 const connector = connect(mapStateToProps, {
     follow,
     unfollow,
@@ -128,4 +130,4 @@ const connector = connect(mapStateToProps, {
     getUsers:getUsersThunkCreator
 })
 export type PropsT = ConnectedProps<typeof connector>
-export default connector(UsersContainer);
+export default connector(withRedirect);

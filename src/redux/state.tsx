@@ -1,6 +1,7 @@
 import {addPostActionCreator, profileReducer, updateNewTextActionCreator} from "./profile-reduser";
 import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reduser";
 import {ActionsType} from "./redux-store";
+import {ProfileType} from "../components/Profile/Profile";
 
 //перенесли в profile-reduser,dialogs-reduser
 // const ADD_POST = "ADD-POST";
@@ -9,7 +10,7 @@ import {ActionsType} from "./redux-store";
 // const SEND_MESSAGE = "SEND-MESSAGE"
 
 export type StateType = {
-    profilePage: ProfilePageType
+    profilePage: ProfileType
     dialogsPage: DialogsPageType
     usersPage:usersPageType
     auth: any
@@ -21,10 +22,7 @@ export type StoreType = {
     subscribe: (observer: () => void) => void
     dispatch: (action: ActionsType) => void
 }
-export type ProfilePageType = {
-    posts: PostType[]
-    newPostText: string
-}
+
 export type PostType = {
     id: number
     message: string

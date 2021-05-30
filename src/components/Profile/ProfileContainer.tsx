@@ -3,23 +3,24 @@ import Profile from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
 import {getUserProfile} from "../../redux/profile-reduser";
-import { RouteComponentProps,withRouter} from "react-router";
+import {RouteComponentProps, withRouter} from "react-router";
 import {Redirect} from "react-router-dom";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
-type ParamsType ={
+type ParamsType = {
     userId: number
 }
-type MapStatePropsType = {
+ export type MapStatePropsType = {
     profile: any
-    isAuth: any
+    isAuth: boolean
 }
 type MapDispatchPropsType = {
     getUserProfile: (profile: any) => void
 }
 type OwnPropsType = MapStatePropsType & MapDispatchPropsType
 // @ts-ignore
-type PropsType = RouteComponentProps<ParamsType>& OwnPropsType
+type PropsType = RouteComponentProps<ParamsType> & OwnPropsType
 
 class ProfileContainer extends React.Component <PropsType> {
     componentDidMount() {
@@ -34,14 +35,18 @@ class ProfileContainer extends React.Component <PropsType> {
         //         this.props.setUsersProfile(response.data);
         //     });
     }
-
     render() {
-        //перенапровление Redirect
-        if (this.props.isAuth === false) return <Redirect to="/Login"/>
+
         return <Profile{...this.props} profile={this.props.profile}/>
     }
 }
-
+//hoc
+// let AuthRedirectComponent = WithAuthRedirect(ProfileContainer)
+//     (props:any) =>{
+//     //перенапровление Redirect
+//     if (props.isAuth === false) return <Redirect to="/Login"/>
+//     return <ProfileContainer {...props}/>
+// }
 
 let mapStateToProps = (state: any): MapStatePropsType => ({
     profile: state.profilePage.profile,
@@ -50,7 +55,7 @@ let mapStateToProps = (state: any): MapStatePropsType => ({
 
 
 let WithUrlDataContainerComponent = withRouter(ProfileContainer);
-export default connect(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent);
+export default WithAuthRedirect( connect(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent));
 //   типизация
 // posts: PostType[]
 // likesCount: PostType[]
