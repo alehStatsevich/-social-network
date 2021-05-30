@@ -12,6 +12,7 @@ export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     usersPage:usersPageType
+    auth: any
 }
 export type StoreType = {
     _state: StateType

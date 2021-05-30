@@ -51,8 +51,7 @@ let initialState : DataType = {
              id: action.userId,
              email: action.email,
              login: action.login,
-             // ...action.data,
-             isAuth: true
+             isAuth: false
         }
         default:
           return state;

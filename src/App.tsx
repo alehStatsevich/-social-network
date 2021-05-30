@@ -6,17 +6,10 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from './components/Login/Login';
 
 
-// type StatePropsType = {
-//     state: StateType
-//     addPost: () => void;
-//     changeText: (newPostText: string) => void;
-// }
-// type PropsType = {
-//     store:  StoreType
-//     dispatch:  (action: ActionsType )=> void
-// }
+
 
 function App() {
 
@@ -32,6 +25,8 @@ function App() {
                        render={() => <ProfileContainer/>}/>
                 <Route path='/users'
                        render={() => <UsersContainer/>}/>
+                <Route path='/login'
+                       render={() => <Login/>}/>
             </div>
         </div>
 
@@ -46,3 +41,12 @@ export default App;
 // <Profile store={props.store}
 //          dispatch={props.store.dispatch.bind(props.store)}
 
+// type StatePropsType = {
+//     state: StateType
+//     addPost: () => void;
+//     changeText: (newPostText: string) => void;
+// }
+// type PropsType = {
+//     store:  StoreType
+//     dispatch:  (action: ActionsType )=> void
+// }
