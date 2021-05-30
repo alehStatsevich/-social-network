@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ComponentType} from "react";
 import Profile from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
@@ -6,6 +6,8 @@ import {getUserProfile} from "../../redux/profile-reduser";
 import {RouteComponentProps, withRouter} from "react-router";
 import {Redirect} from "react-router-dom";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
+import {AppStateType} from "../../redux/redux-store";
 
 
 type ParamsType = {
@@ -40,6 +42,22 @@ class ProfileContainer extends React.Component <PropsType> {
         return <Profile{...this.props} profile={this.props.profile}/>
     }
 }
+
+let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
+    profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
+})
+
+export default compose<ComponentType>(
+    connect(mapStateToProps, {getUserProfile}),
+    withRouter,
+    WithAuthRedirect
+)(ProfileContainer);
+
+
+// let WithUrlDataContainerComponent = withRouter(ProfileContainer);
+// export default WithAuthRedirect( connect(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent));
+
 //hoc
 // let AuthRedirectComponent = WithAuthRedirect(ProfileContainer)
 //     (props:any) =>{
@@ -47,15 +65,6 @@ class ProfileContainer extends React.Component <PropsType> {
 //     if (props.isAuth === false) return <Redirect to="/Login"/>
 //     return <ProfileContainer {...props}/>
 // }
-
-let mapStateToProps = (state: any): MapStatePropsType => ({
-    profile: state.profilePage.profile,
-    isAuth: state.auth.isAuth
-})
-
-
-let WithUrlDataContainerComponent = withRouter(ProfileContainer);
-export default WithAuthRedirect( connect(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent));
 //   типизация
 // posts: PostType[]
 // likesCount: PostType[]

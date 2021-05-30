@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ComponentType} from 'react'
 import {connect, ConnectedProps} from "react-redux";
 import {
     follow, getUsersThunkCreator,
@@ -11,8 +11,8 @@ import {
 import {AppStateType} from "../../redux/redux-store";
 import Users from "./Users";
 import Preloader from "../Preloader";
-import {userAPI} from "../../api/api";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 
 type MapStatePropsType = {
@@ -35,7 +35,7 @@ type UsersPropsType = any
 
 //MapStatePropsType & MapDispatchToPropsType
 
-class UsersContainer extends React.Component <PropsT> {
+class UsersContainer extends React.Component <UsersPropsType>{
     componentDidMount() {
         this.props.getUsers(this.props.currentPage,this.props.pageSize);
         // this.props.toggleIsFetching(true);
@@ -84,6 +84,16 @@ let mapStateToProps = (state: AppStateType) => {
         followingInProgress: state.usersPage.followingInProgress
     }
 }
+export default compose<ComponentType>(
+    WithAuthRedirect,
+    connect(mapStateToProps, {
+        follow,
+        unfollow,
+        setCurrentPage,
+        toggleFollowingInProgress,
+        getUsers:getUsersThunkCreator
+    })
+)(UsersContainer);
 // let mapDispatchToProps = (dispatch: Dispatch) => {
 //     return {
 //         follow: (userId: number) => {
@@ -118,16 +128,16 @@ let mapStateToProps = (state: AppStateType) => {
 //     toggleFollowingInProgress
 // })(UsersContainer);
 
-let withRedirect = WithAuthRedirect(UsersContainer)
-const connector = connect(mapStateToProps, {
-    follow,
-    unfollow,
-    // setUsers,
-    setCurrentPage,
-    // setTotalUsersCount,
-    // toggleIsFetching,
-    toggleFollowingInProgress,
-    getUsers:getUsersThunkCreator
-})
-export type PropsT = ConnectedProps<typeof connector>
-export default connector(withRedirect);
+// let withRedirect = WithAuthRedirect(UsersContainer)
+// const connector = connect(mapStateToProps, {
+//     follow,
+//     unfollow,
+//     // setUsers,
+//     setCurrentPage,
+//     // setTotalUsersCount,
+//     // toggleIsFetching,
+//     toggleFollowingInProgress,
+//     getUsers:getUsersThunkCreator
+// })
+// export type PropsT = ConnectedProps<typeof connector>
+// export default connector(withRedirect);

@@ -3,9 +3,6 @@ import s from "./Users.module.css";
 import userPhoto from "../../assets/images/user.png";
 import {UserType} from "../../redux/users-reduser";
 import {NavLink} from 'react-router-dom';
-import axios from "axios";
-import {PropsT} from "./UsersContainer";
-import {userAPI} from "../../api/api";
 
 export type PropsType = {
     users: UserType[]
