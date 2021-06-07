@@ -7,6 +7,8 @@ import {PostType} from "../../redux/state";
 
 export type ProfilePropsType ={
     profile: ProfileType | null
+    status: string
+    updateStatus:any
 }
 export type ProfileType = {
     posts: PostType[]
@@ -14,7 +16,8 @@ export type ProfileType = {
 }
 const Profile = (props: ProfilePropsType) => {
     return <div>
-        <Profileinfo profile={props.profile}/>
+        <Profileinfo profile={props.profile}  status={props.status}
+                     updateStatus={props.updateStatus}/>
         <MyPostsContainer/>
 
     </div>
