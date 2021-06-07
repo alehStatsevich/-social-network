@@ -1,5 +1,5 @@
-import {addPostActionCreator, profileReducer, updateNewTextActionCreator} from "./profile-reduser";
-import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reduser";
+
+
 import {ActionsType} from "./redux-store";
 import {ProfileType} from "../components/Profile/Profile";
 

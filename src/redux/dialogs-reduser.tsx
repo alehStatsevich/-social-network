@@ -1,11 +1,11 @@
 import {DialogType, MessageType, StateType} from "./state";
-export const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
+// export const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
  export const SEND_MESSAGE = "SEND-MESSAGE";
 
  type dialogsPageType  = {
     messages: MessageType[]
     dialogs: DialogType[]
-    newMessageBody: string
+   // newMessageBody: string
  }
  let initialState :dialogsPageType = {
     messages: [
@@ -23,7 +23,7 @@ export const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
        {id: 5, name: 'Viktor'},
        {id: 6, name: 'Valera'}
     ],
-    newMessageBody: ""
+   // newMessageBody: ''
  }
 
 export  const dialogsReducer = (state= initialState, action: any): dialogsPageType => {
@@ -31,17 +31,17 @@ export  const dialogsReducer = (state= initialState, action: any): dialogsPageTy
 
 
    switch (action.type) {
-      case UPDATE_NEW_MESSAGE_BODY:
-         let stateCopy = {...state}
-         //поверхносная копия
-         stateCopy.newMessageBody = action.body;
-         //ретурним копи стэйт.если вернем стейт это будет тот что приходит в функцию и не будет перерисовки
-         return stateCopy;
+      // case UPDATE_NEW_MESSAGE_BODY:
+      //    let stateCopy = {...state}
+      //    //поверхносная копия
+      //    stateCopy.newMessageBody = action.body;
+      //    //ретурним копи стэйт.если вернем стейт это будет тот что приходит в функцию и не будет перерисовки
+      //    return stateCopy;
       case SEND_MESSAGE: {
-         let body = state.newMessageBody;
+         let body = action.newMessageBody;
          let stateCopy2 = {
             ...state,
-            newMessageBody: '',
+           // newMessageBody: '',
             messages: [...state.messages,{id: 6, message: body}]}
         //копируем месаджи и  пушим messages.push({id: 6, message: body}
 
@@ -53,15 +53,14 @@ export  const dialogsReducer = (state= initialState, action: any): dialogsPageTy
          return state;//????????????
    }
 }
-export const sendMessageCreator = () => {
-   return{type: 'SEND-MESSAGE'} as const
+export const sendMessageCreator = (newMessageBody:any) => {
+   return{type: 'SEND-MESSAGE',newMessageBody} as const
 }
-export const updateNewMessageBodyCreator = (body: string) => {
-   return {type: 'UPDATE-NEW-MESSAGE-BODY', body: body} as const
-}
+export default dialogsReducer;
 
-
-
+// export const updateNewMessageBodyCreator = (body: string) => {
+//    return {type: 'UPDATE-NEW-MESSAGE-BODY', body: body} as const
+// }
 //  if(action.type === 'UPDATE-NEW-MESSAGE-BODY'){
 //       state.dialogsPage.newMessageBody = action.body;
 //

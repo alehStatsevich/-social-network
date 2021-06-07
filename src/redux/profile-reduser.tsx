@@ -3,14 +3,14 @@ import {Dispatch} from "redux";
 import {profileAPI, userAPI} from "../api/api";
 
 export const ADD_POST = "ADD-POST";
-export const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+// export const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 export const SET_USER_PROFILE = "SET_USER_PROFILE";
 export const SET_STATUS = "SET_STATUS";
 
 type ProfilePageType = {
     status: string;
     posts: PostType[]
-    newPostText: string
+   newPostText: string
     profile: null
 
 }
@@ -32,7 +32,7 @@ export const profileReducer = (state = initialState, action: any): ProfilePageTy
         case ADD_POST:
             let newPost: PostType = {
                 id: 5,
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             };
             let stateCopy = {...state};
@@ -40,10 +40,10 @@ export const profileReducer = (state = initialState, action: any): ProfilePageTy
             stateCopy.posts.push(newPost);
             stateCopy.newPostText = "";
             return stateCopy;
-        case UPDATE_NEW_POST_TEXT:
-            let stateCopy2 = {...state}
-            stateCopy2.newPostText = action.newPostText;
-            return stateCopy2;
+        // case UPDATE_NEW_POST_TEXT:
+        //     let stateCopy2 = {...state}
+        //     stateCopy2.newPostText = action.newPostText;
+        //     return stateCopy2;
         case SET_STATUS:{
             return{ ...state,
             status :action.status
@@ -56,12 +56,12 @@ export const profileReducer = (state = initialState, action: any): ProfilePageTy
             return state;
     }
 }
-export const addPostActionCreator = () => {
-    return {type: 'ADD-POST'} as const
+export const addPostActionCreator = (newPostText:any) => {
+    return {type: 'ADD-POST',newPostText} as const
 }
-export const updateNewTextActionCreator = (newPostText: string) => {
-    return {type: 'UPDATE-NEW-POST-TEXT', newPostText: newPostText} as const
-}
+// export const updateNewTextActionCreator = (newPostText: string) => {
+//     return {type: 'UPDATE-NEW-POST-TEXT', newPostText: newPostText} as const
+// }
 export const setStatus = (status: string) => {
     return {type: 'SET_STATUS', status} as const
 }

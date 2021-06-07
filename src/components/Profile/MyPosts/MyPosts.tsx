@@ -2,17 +2,28 @@ import React from "react";
 import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import {PostType} from "../../../redux/state";
+import {Field, reduxForm} from "redux-form";
 
 
-class newPostText {
-}
+
 
 export type MyPostsPropsType ={
     posts: PostType[]
     newPostText: string
-     addPost: () => void
-    updateNewPostText: (text: string)=> void
+     addPost: (newPostText:any) => void
 }
+
+function AddNewPostForm(props: any) {
+    return <form onSubmit={props.handleSubmit}>
+        <div>
+            <Field name="newPostText" component="textarea"/>
+        </div>
+        <div>
+            <button>Add post</button>
+        </div>
+    </form>;
+}
+const ProfileAddNewPostForm= reduxForm({form:"ProfileAddNewPostForm"})(AddNewPostForm);
 
 const MyPosts = (props:MyPostsPropsType) => {
     let postsElements =
@@ -21,34 +32,13 @@ const MyPosts = (props:MyPostsPropsType) => {
     //  let newPostElement = React.createRef();
     let newPostElement = React.createRef<HTMLTextAreaElement>();
 
-    let addPost = () => {
-        props.addPost();
-        // let text = newPostElement.current.value;
-        // props.dispatch(addPostActionCreator())
-    }
-
-    const changeTextarea = () => {
-        // if (newPostElement.current) {
-
-        let text= newPostElement.current?.value;
-            props.updateNewPostText(text||"")
-            // let action = updateNewTextActionCreator(text)
-            // props.dispatch(action)
-
-
+    let addPost = (values:any) => {
+        props.addPost(values.newPostText);
     }
 
     return <div className={s.postsBlock}>
         <h3> my posts</h3>
-        <div>
-            <div>
-                <textarea ref={newPostElement} onChange={changeTextarea}
-                          value={props.newPostText}/>
-            </div>
-            <div>
-                <button onClick={props.addPost}>Add post</button>
-            </div>
-        </div>
+        <ProfileAddNewPostForm onSubmit={addPost}/>
         <div className={s.posts}>
 
             {postsElements}
@@ -63,7 +53,16 @@ export default MyPosts;
 // likesCount: PostType[]
 //  addPost: (text: newPostText) => void
 //    newPostText: string
-//
+//  // const changeTextarea = () => {
+//     //     // if (newPostElement.current) {
+//     //
+//     //     let text= newPostElement.current?.value;
+//     //         props.updateNewPostText(text||"")
+//     //         // let action = updateNewTextActionCreator(text)
+//     //         // props.dispatch(action)
+//     //
+//     //
+//     // }
 //
 
 
