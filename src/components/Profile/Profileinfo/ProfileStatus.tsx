@@ -20,7 +20,15 @@ deactivateEditMode =() =>{
         status: e.currentTarget.value
     })
 }
-render() {
+componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<{}>, snapshot?: any) {
+    if (prevProps.status !== this.props.status){
+        this.setState({
+            status:this.props.status
+        })
+    }
+}
+
+    render() {
     return <div>
         {!this.state.editMode &&
         <div>
