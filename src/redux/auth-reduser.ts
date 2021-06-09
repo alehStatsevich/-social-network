@@ -20,6 +20,7 @@ export type DataType = {
     id: number | null
     email: string | null
     login:string | null
+    auth?:any
    isAuth: boolean
 
 }
@@ -51,21 +52,42 @@ let initialState : DataType = {
              id: action.userId,
              email: action.email,
              login: action.login,
-             isAuth: false
+            // isAuth: false
         }
         default:
           return state;
     }
  }
-export const setAuthUserData = (userId: number,login:string,email:string) => {
-    return{type: 'SET_USER_DATA',data: {userId, email, login}} as const
+export const setAuthUserData = (userId: number,login:string,email:string,isAuth:boolean) => {
+    return{type: 'SET_USER_DATA',data: {userId, email, login,isAuth}} as const
 }
+//санкрейтор
 export const getAuthUserData=()=>(dispatch: Dispatch)=>{
     authAPI.me()
         .then(response => {
             if(response.data.resultCode === 0) {
                 let {id, login, email} = response.data.data.login
-                dispatch(setAuthUserData(id, login, email));
+                dispatch(setAuthUserData(id, login, email,true));
+            }
+        }) ;
+
+}
+//санкрейтор
+export const login=(email:string, password:string, rememberMe:boolean)=>(dispatch:any)=>{
+    authAPI.login(email,password,rememberMe)
+        .then(response => {
+            if(response.data.resultCode === 0) {
+              dispatch(getAuthUserData())
+            }
+        });
+
+}
+//санкрейтор
+export const logout=()=>(dispatch: any)=>{
+    authAPI.logout()
+        .then(response => {
+            if(response.data.resultCode === 0) {
+                dispatch(getAuthUserData())
             }
         });
 

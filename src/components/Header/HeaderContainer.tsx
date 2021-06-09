@@ -9,6 +9,7 @@ export type PropsType =  {
     isAuth: boolean
     login: string
     getAuthUserData: () => void
+    logout?:()=>void
 }
 
 
