@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 
 export const SET_USER_DATA= 'SET_USER_DATA';
@@ -22,6 +23,7 @@ export type DataType = {
     login:string | null
     auth?:any
    isAuth: boolean
+    userId?: number
 
 }
 // export type initialStateType = {
@@ -78,6 +80,10 @@ export const login=(email:string, password:string, rememberMe:boolean)=>(dispatc
         .then(response => {
             if(response.data.resultCode === 0) {
               dispatch(getAuthUserData())
+            }else {
+                let message = response.data.message.length>0 ? response.data.message[0] :"Common error";
+                dispatch( stopSubmit("login",{email: message}));
+
             }
         });
 

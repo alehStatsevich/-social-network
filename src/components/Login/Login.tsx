@@ -3,8 +3,9 @@ import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {required} from "../../utils/validators/validators";
 import {Input} from "../common/FormsControls/FormsControls";
 import {connect} from "react-redux";
-import {DataType, login} from "../../redux/auth-reduser";
+import {login} from "../../redux/auth-reduser";
 import {Redirect} from "react-router-dom";
+import styles  from "../common/FormsControls/FormsControls.module.css"
 
 type FormDataType={
     login: any
@@ -31,6 +32,7 @@ type FormDataType={
                        validate={[required]}
                        component={Input}/> remember me
             </div>
+            {props.error && <div className={styles.formSummaryError}>{props.error}</div>}
             <div>
                 <button>Login</button>
             </div>

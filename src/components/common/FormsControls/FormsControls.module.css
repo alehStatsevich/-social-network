@@ -7,6 +7,7 @@
 {
     color: red;
 }
-/*.formBorder{*/
-/*    border: 1px solid red;*/
-/*}*/
+.formSummaryError {
+    padding: 5px;
+    coloor: red;
+}
