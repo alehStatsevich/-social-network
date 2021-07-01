@@ -1,6 +1,6 @@
 import React from "react";
 
-
+//закоментированный в Profileinfo
 
 class ProfileStatus extends React.Component <any> {
 state={
