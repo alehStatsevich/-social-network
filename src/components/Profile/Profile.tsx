@@ -1,5 +1,5 @@
 import React from "react";
-import Profileinfo from "./Profileinfo/Profileinfo"
+import ProfileInfo from "./Profileinfo/Profileinfo"
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import {PostType} from "../../redux/state";
 
@@ -17,7 +17,7 @@ export type ProfileType = {
 const Profile = (props: ProfilePropsType) => {
     return <div>
 
-        <Profileinfo profile={props.profile} status={props.status}
+        <ProfileInfo profile={props.profile} status={props.status}
                      updateStatus={props.updateStatus}/>
         <MyPostsContainer/>
 

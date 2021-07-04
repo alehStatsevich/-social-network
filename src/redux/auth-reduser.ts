@@ -14,10 +14,7 @@ let initialState: AuthStateType = {
 
 
 export const authReducer = (state: AuthStateType = initialState, action: AuthActionType): AuthStateType => {
-
-
     switch (action.type) {
-
         case SET_USER_DATA:
             return {
                 ...state,
@@ -40,7 +37,6 @@ export const setUserDataAC = (userId: number | null, email: string | null, login
 export const getAuthUserDataTC = () => {
     return async (dispatch: Dispatch<AuthActionType>) => {
         let response = await authAPI.me()
-
         if (response.data.resultCode === 0) {
             let {id, login, email} = response.data.data
             dispatch(setUserDataAC(id, login, email, true))
@@ -50,9 +46,7 @@ export const getAuthUserDataTC = () => {
 
 export const LoginTC = (email: string, password: string, rememberMe: boolean) => {
     return async (dispatch: Dispatch<any>) => {
-
         let response = await authAPI.login(email, password, rememberMe)
-
         if (response.data.resultCode === 0) {
             dispatch(getAuthUserDataTC())
         } else {
@@ -64,9 +58,7 @@ export const LoginTC = (email: string, password: string, rememberMe: boolean) =>
 
 export const logoutTC = () => {
     return async (dispatch: Dispatch<AuthActionType>) => {
-
         let response = await authAPI.logout()
-
         if (response.data.resultCode === 0) {
             dispatch(setUserDataAC(null, null, null, false))
         }

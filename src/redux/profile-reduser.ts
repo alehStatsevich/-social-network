@@ -68,24 +68,20 @@ export const setUsersProfile = (profile: null) => {
 }
 //санкрейтор это функция которая возращает функцию санку ,Санка это функция которая принимает диспатчь и делает внутри
 //асинхронные операции и различные мелкие диспатчи
-export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
-    userAPI.getProfile(userId)
-        .then(response => {
-            dispatch(setUsersProfile(response.data));
-        })
+export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
+    const response = await userAPI.getProfile(userId)
+    dispatch(setUsersProfile(response.data));
 }
-export const getStatus = (userId: number) => (dispatch: Dispatch) => {
-    profileAPI.getStatus(userId)
-        .then(response => {
-            dispatch(setStatus(response.data));
-        })
+
+export const getStatus = (userId: number) => async (dispatch: Dispatch) => {
+    const response = await profileAPI.getStatus(userId)
+    dispatch(setStatus(response.data));
 }
-export const updateStatus = (status: string) => (dispatch: Dispatch) => {
-    profileAPI.updateStatus(status)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setStatus(status));
-            }
-        })
+
+export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
+    const response = await profileAPI.updateStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setStatus(status));
+    }
 }
 
