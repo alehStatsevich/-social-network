@@ -1,11 +1,9 @@
 import React, {ComponentType} from 'react'
-import {connect, ConnectedProps} from "react-redux";
+import {connect} from "react-redux";
 import {
     follow, getUsersThunkCreator,
-    initialStateType,
     setCurrentPage,
-    setTotalUsersCount,
-    setUsers, toggleFollowingInProgress, toggleIsFetching, unfollow,
+    toggleFollowingInProgress, unfollow,
     UserType
 } from "../../redux/users-reduser";
 import {AppStateType} from "../../redux/redux-store";
@@ -57,7 +55,7 @@ class UsersContainer extends React.Component <UsersPropsType> {
 
         return <>
             {this.props.isFetching ? <Preloader/> : null}
-            <Users totalUsersCount={this.props.totalUsersCount}
+            <Users totalItemCount={this.props.totalItemCount}
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
                    onPageChanged={this.onPageChanged}
@@ -73,7 +71,7 @@ let mapStateToProps = (state: AppStateType) => {
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
-        totalUsersCount: getTotalUsersCount(state),
+        totalItemCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         followingInProgress: getFollowInProgress(state)

@@ -7,7 +7,7 @@ export type PropsType = {
     users: Array<UsersType>;
     currentPage: number;
     pageSize: number;
-    totalUsersCount: number;
+    totalItemCount: number;
     follow: (userId: number) => void;
     unfollow: (userId: number) => void;
     onPageChanged: (p: number) => void;
@@ -16,15 +16,19 @@ export type PropsType = {
 let Users = (props: PropsType) => {
     return <div>
         <Paginator currentPage={props.currentPage} onPageChanged={props.onPageChanged}
-                   totalUsersCount={props.totalUsersCount} pageSize={props.pageSize}/>
+                   totalItemCount={props.totalItemCount} pageSize={props.pageSize}/>
         <div>
             {
-                props.users.map((u) => <User user={u}
-                                             key={u.id}
-                                             follow={props.follow}
-                                             unfollow={props.unfollow}
-                                             followingInProgress={props.followingInProgress}
-                />)
+                props.users.map((u) => {
+                    return (
+                        <User user={u}
+                              key={u.id}
+                              follow={props.follow}
+                              unfollow={props.unfollow}
+                              followingInProgress={props.followingInProgress}
+                        />
+                    )
+                })
             }
         </div>
     </div>
