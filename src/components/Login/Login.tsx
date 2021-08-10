@@ -20,10 +20,14 @@ type LoginPropsType = {
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
+
         <form onSubmit={props.handleSubmit}>
+            <p>Email: free@samuraijs.com</p>
+            <p> Password: free</p>
             <div>
                 <Field placeholder={"Email"} name={"email"} component={Input}
-                       validate={[required]}/>
+                       validate={[required]}
+                />
             </div>
             <div>
                 <Field placeholder={"Password"} name={"password"} component={Input}

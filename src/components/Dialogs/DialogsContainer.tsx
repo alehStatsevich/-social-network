@@ -26,7 +26,7 @@ let mapDispatchToProps = (dispatch:Dispatch) => {
 
 export default compose<ComponentType>(
     connect(mapStateToProps, mapDispatchToProps),
-    WithAuthRedirect
+  WithAuthRedirect
 )(Dialogs);
 //hoc
 // let AuthRedirectComponent = WithAuthRedirect(Dialogs)
